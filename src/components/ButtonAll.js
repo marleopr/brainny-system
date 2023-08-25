@@ -1,11 +1,15 @@
 import { Button } from "@chakra-ui/react"
 
-const ButtonAll = ({ label, width, height }) => {
+const ButtonAll = ({ onClick, label, width, height }) => {
     return (
         <Button
             width={width}
             height={height}
-            colorScheme='purple'>{label}</Button>
+            colorScheme='purple'
+            onClick={onClick}
+        >
+            {label}
+        </Button>
     )
 }
 export default ButtonAll

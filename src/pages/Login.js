@@ -3,8 +3,11 @@ import colors from '../constants/colors'
 import InputEmail from "../components/InputEmail"
 import InputPassword from "../components/InputPassword"
 import ButtonAll from "../components/ButtonAll"
+import { goToAdmin } from "../routes/Cordinator"
+import { useNavigate } from "react-router-dom"
 
 const Login = () => {
+    const navigate = useNavigate()
 
     return (
         <Main>
@@ -19,7 +22,7 @@ const Login = () => {
                 <h4>Senha</h4>
                 <InputPassword />
                 <a href="http://null.com.br">Esqueci minha senha</a>
-                <ButtonAll label="Enviar" width="25rem" height='50px' />
+                <ButtonAll onClick={() => goToAdmin(navigate)} label="Enviar" width="25rem" height='50px' />
             </ContainerLogin>
         </Main>
     )
