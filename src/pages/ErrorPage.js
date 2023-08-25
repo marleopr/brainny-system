@@ -1,18 +1,18 @@
 import { useNavigate } from "react-router-dom"
-// import SquareLoader from "../components/SquareLoader"
 import { goToLogin } from "../routes/Cordinator"
 import pageNotFound from "../assets/pagina-nao-encontrada.png"
+import ButtonAll from "../components/ButtonAll"
+import colors from "../constants/colors"
 const ErrorPage = () => {
     const navigate = useNavigate()
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-            <h1 style={{ color: 'white', textShadow: '-1px 0 black, 0 1px #0a37ff, 1px 0 #ff0000, 0 -1px rgb(0, 81, 255)' }}>Página não encontrada</h1>
+            <img src="img/imgLogoPontoGo.svg" alt="PontoGo" style={{ width: '12rem', marginTop: '20px' }} />
+            <h1 style={{ color: `${colors.PrincipalColor}`, margin: '30px' }}>Página não encontrada</h1>
             <img src={pageNotFound} alt="Page Not Found" style={{ width: '100px', marginBottom: '20px' }} />
-            <button onClick={() => goToLogin(navigate)} style={{ width: '180px', marginBottom: '50px' }} className="buttonAll">Voltar ao início</button>
-            {/* <SquareLoader /> */}
+            <ButtonAll onClick={() => goToLogin(navigate)} label="Voltar ao início" style={{ width: '180px', marginBottom: '50px' }} />
         </div >
-
     )
 }
 export default ErrorPage

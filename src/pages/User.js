@@ -94,12 +94,21 @@ const Main = styled.div`
     height: 99vh;
     box-sizing: border-box;
     background-color: #f2f2f2;
+      @media screen and (max-device-width: 480px) {
+        display: flex;
+        flex-direction: column;
+    }
     `
 
 const Menu = styled.div`
     box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2), 0 10px 20px 0 rgba(0,0,0,0.19);
     background-color: #ffffff;
     z-index: 99999;
+      @media screen and (max-device-width: 480px) {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
     `
 const Dashboard = styled.div`
     border-top: 1px solid #dedede;
@@ -108,6 +117,13 @@ const Dashboard = styled.div`
     padding: 30px;
     img {
         width: 8.2rem;
+    }
+     @media screen and (max-device-width: 480px) {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        padding: 0;
+        border: none;
     }
     `
 const LogoutContainer = styled.div`
@@ -119,18 +135,27 @@ const LogoutContainer = styled.div`
     img {
         margin-right: 10px;
     }
+     @media screen and (max-device-width: 480px) {
+         position: relative;
+        width: 100%;
+        padding: 0;
+    }
     `
 const ButtonContainer = styled.div`
     margin: 20px 0 20px 0;
+      @media screen and (max-device-width: 480px) {
+        display: flex;
+        justify-content: center;
+    }
     `
 const TableContainer = styled.div`
-    width: 100%;
-    margin: 15px;
-    height: 85vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between; 
     align-items: stretch;
+    width: 100%;
+    height: 85vh;
+    margin: 15px;
     .collaborator {
         width: 415px;
     }
@@ -159,6 +184,9 @@ const TableContainer = styled.div`
         width: 60px;
         color: ${colors.silver};
     }
+      @media screen and (max-device-width: 480px) {
+        margin: 0;
+    }
 `
 const ColumnContainer = styled.div`
     display: flex;
@@ -171,6 +199,9 @@ const CardsContainer = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
+       @media screen and (max-device-width: 480px) {
+        display: contents;
+    }
 `
 const Card = styled.div`
     display: flex;
@@ -186,4 +217,9 @@ const PaginationContainer = styled.div`
     position: fixed;
     bottom: 0;
     width: 100%;
+      @media screen and (max-device-width: 480px) {
+    position: static;
+    align-items: center;
+    margin-top: 10px;
+}
 `

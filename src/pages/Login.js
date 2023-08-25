@@ -37,11 +37,21 @@ const Main = styled.div`
     box-sizing: border-box;
     background: rgb(227, 228, 255);
     background: radial-gradient(circle, rgba(236, 236, 255, 1) 0%, rgba(255,255,255,1) 100%);
+    @media screen and (max-device-width: 480px) {
+        flex-direction: column;
+    }
 `
 const ContainerWelcome = styled.div`
     img {
         width: 32rem;
       }
+      @media screen and (max-device-width: 480px) {
+    h1 {
+    }
+    img {
+        width: 12rem;
+    }
+}
     `
 
 const ContainerLogin = styled.div`
@@ -68,4 +78,19 @@ const ContainerLogin = styled.div`
         margin-bottom: 15px;
         color: ${colors.PrincipalColor};
     }
+    @media screen and (max-device-width: 480px) {
+        h1 {
+            font-size: 20px;
+        }
+        img {
+            width: 10rem;
+        }
+        h4{
+            text-align: start;
+            align-items: start;
+        }
+    button, input {
+        width: 300px;
+    }
+}
 `
