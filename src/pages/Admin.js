@@ -5,9 +5,11 @@ import Pagination from "../hooks/Pagination";
 import users from "../constants/users.json"
 import { goToLogin } from "../routes/Cordinator";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/AuthContext";
 
 const Admin = () => {
     const navigate = useNavigate()
+    const { logout } = useAuth();
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
@@ -20,6 +22,10 @@ const Admin = () => {
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
+    const handleLogout = () => {
+        logout();
+        goToLogin(navigate)
+    };
 
     return (
         <Main>
@@ -29,7 +35,7 @@ const Admin = () => {
                     <img src="img/imgDashboard.svg" alt="Dashboard" />
 
                 </Dashboard>
-                <LogoutContainer onClick={() => goToLogin(navigate)}>
+                <LogoutContainer onClick={handleLogout}>
                     <img src="img/imgLogout.svg" alt="Logout" />
                     <p>Sair</p>
                 </LogoutContainer>

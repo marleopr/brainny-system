@@ -7,9 +7,11 @@ import { goToLogin } from "../routes/Cordinator";
 import { useNavigate } from "react-router-dom";
 import ButtonAll from "../components/ButtonAll";
 import ModalRegister from "../components/ModalRegister";
+import { useAuth } from "../hooks/AuthContext";
 
 const User = () => {
     const navigate = useNavigate()
+    const { logout } = useAuth();
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
@@ -30,6 +32,10 @@ const User = () => {
     const closeModal = () => {
         setModalOpen(false);
     };
+    const handleLogout = () => {
+        logout();
+        goToLogin(navigate)
+    };
 
     return (
         <Main>
@@ -39,7 +45,7 @@ const User = () => {
                     <img src="img/imgDashboardUser.svg" alt="DashboardUser" />
 
                 </Dashboard>
-                <LogoutContainer onClick={() => goToLogin(navigate)}>
+                <LogoutContainer onClick={handleLogout}>
                     <img src="img/imgLogout.svg" alt="Logout" />
                     <p>Sair</p>
                 </LogoutContainer>

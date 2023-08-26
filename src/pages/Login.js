@@ -3,11 +3,44 @@ import colors from '../constants/colors'
 import InputEmail from "../components/InputEmail"
 import InputPassword from "../components/InputPassword"
 import ButtonAll from "../components/ButtonAll"
-import { goToAdmin } from "../routes/Cordinator"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../hooks/AuthContext"
+import { useState } from "react"
+import usersApi from "../constants/usersApi.json"
 
 const Login = () => {
     const navigate = useNavigate()
+    const { login } = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+
+
+    const handleLogin = async (event) => {
+        event.preventDefault();
+        const userData = {
+            email: email,
+            password: password
+        };
+    
+        const success = await login(userData);
+    
+        if (success) {
+            const authenticatedUser = usersApi.usersApi.find(
+                (user) =>
+                    user.email === userData.email && user.password === userData.password
+            );
+    
+            if (authenticatedUser.admin) {
+                navigate("/admin");
+            } else {
+                navigate("/user");
+            }
+        } else {
+            setError("Credenciais inválidas");
+        }
+    };
+    
 
     return (
         <Main>
@@ -18,11 +51,12 @@ const Login = () => {
                 <img src="img/imgLogoPontoGo.svg" alt="Logo PontoGo" />
                 <h1>Faça login</h1>
                 <h4>Email</h4>
-                <InputEmail placeholder="exemplo@email.com" />
+                <InputEmail placeholder="exemplo@email.com" value={email} onChange={event => setEmail(event.target.value)} />
                 <h4>Senha</h4>
-                <InputPassword />
-                <a href="http://null.com.br">Esqueci minha senha</a>
-                <ButtonAll onClick={() => goToAdmin(navigate)} label="Enviar" width="25rem" height='50px' />
+                <InputPassword value={password} onChange={event => setPassword(event.target.value)} />
+                <a href="/">Esqueci minha senha</a>
+                <ButtonAll onClick={handleLogin} label="Enviar" width="25rem" height='50px' />
+                {error && <p style={{ color: 'red' }}>{error}</p>}
             </ContainerLogin>
         </Main>
     )

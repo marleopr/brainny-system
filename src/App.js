@@ -1,13 +1,15 @@
-// import './App.css';
+import { ChakraProvider } from "@chakra-ui/react";
 import { Router } from "./routes/Router";
+import AuthProvider from "./hooks/AuthContext";
 
 function App() {
   return (
     <div style={{ fontFamily: 'Poppins', alignItems: 'center', width: '100vw', height: '100h', boxSizing: 'border-box' }}>
-      {/* <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '100vh', boxSizing: 'border-box', padding: '5px', fontFamily: 'Poppins', alignItems: 'center' }}> */}
-      {/* <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }}> */}
-      <Router />
-      {/* </div> */}
+      <ChakraProvider>
+        <AuthProvider>
+          <Router />
+        </AuthProvider>
+      </ChakraProvider>
     </div>
   )
 }

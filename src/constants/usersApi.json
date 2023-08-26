@@ -1,0 +1,24 @@
+{
+     "usersApi": [
+        {
+            "email": "admin@brainny.cc",
+            "password": "adminregister",
+            "admin": true
+        },
+        {
+            "email": "maria@brainny.cc",
+            "password": "mariaregister",
+            "admin": false
+        },
+        {
+            "email": "joao@brainny.cc",
+            "password": "joaoregister",
+            "admin": false
+        },
+        {
+            "email": "amanda@brainny.cc",
+            "password": "amandaregister",
+            "admin": false
+        }
+     ]
+}

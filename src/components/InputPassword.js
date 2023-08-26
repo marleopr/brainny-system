@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons"
 import colors from "../constants/colors"
 
-const InputPassword = () => {
+const InputPassword = ({ onChange, value }) => {
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
     return (
@@ -14,13 +14,15 @@ const InputPassword = () => {
                 type={show ? 'text' : 'password'}
                 placeholder='*************'
                 size='md'
+                onChange={onChange}
+                value={value}
             />
             <InputRightElement width='4.5rem'>
                 <Button h='1.75rem' size='sm' onClick={handleClick}>
                     {show ?
                         <FontAwesomeIcon style={{ color: `${colors.PrincipalColor}` }} icon={faEye} />
                         :
-                        <FontAwesomeIcon style={{ color: `${colors.PrincipalColor}` }}  icon={faEyeSlash} />
+                        <FontAwesomeIcon style={{ color: `${colors.PrincipalColor}` }} icon={faEyeSlash} />
                     }
                 </Button>
             </InputRightElement>
