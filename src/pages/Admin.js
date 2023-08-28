@@ -3,13 +3,16 @@ import { styled } from "styled-components";
 import colors from "../constants/colors";
 import Pagination from "../hooks/Pagination";
 import users from "../constants/users.json"
-import { goToLogin } from "../routes/Cordinator";
+// import { goToLogin } from "../routes/Cordinator";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/AuthContext";
+// import { useAuth } from "../hooks/AuthContext";
+import { useProtectedPage } from "../hooks/useProtectPage";
+import { goToLogin } from "../routes/Cordinator";
 
 const Admin = () => {
+    useProtectedPage()
     const navigate = useNavigate()
-    const { logout } = useAuth();
+    // const { logout } = useAuth();
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
@@ -23,7 +26,7 @@ const Admin = () => {
         setCurrentPage(pageNumber);
     };
     const handleLogout = () => {
-        logout();
+        localStorage.removeItem("token");
         goToLogin(navigate)
     };
 

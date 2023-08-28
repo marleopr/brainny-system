@@ -7,11 +7,13 @@ import { goToLogin } from "../routes/Cordinator";
 import { useNavigate } from "react-router-dom";
 import ButtonAll from "../components/ButtonAll";
 import ModalRegister from "../components/ModalRegister";
-import { useAuth } from "../hooks/AuthContext";
+// import { useProtectedPage } from "../hooks/useProtectPage";
+// import { useAuth } from "../hooks/AuthContext";
 
 const User = () => {
     const navigate = useNavigate()
-    const { logout } = useAuth();
+    // const { logout } = useAuth();
+    // useProtectedPage()
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
@@ -33,7 +35,7 @@ const User = () => {
         setModalOpen(false);
     };
     const handleLogout = () => {
-        logout();
+        // logout();
         goToLogin(navigate)
     };
 

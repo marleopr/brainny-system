@@ -4,34 +4,29 @@ import InputEmail from "../components/InputEmail"
 import InputPassword from "../components/InputPassword"
 import ButtonAll from "../components/ButtonAll"
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../hooks/AuthContext"
+// import { useAuth } from "../hooks/AuthContext"
 import { useState } from "react"
 import usersApi from "../constants/usersApi.json"
 
 const Login = () => {
-    const navigate = useNavigate()
-    const { login } = useAuth();
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
 
-
-    const handleLogin = async (event) => {
+   const handleLogin = async (event) => {
         event.preventDefault();
-        const userData = {
-            email: email,
-            password: password
-        };
-    
-        const success = await login(userData);
-    
-        if (success) {
-            const authenticatedUser = usersApi.usersApi.find(
-                (user) =>
-                    user.email === userData.email && user.password === userData.password
-            );
-    
+        const authenticatedUser = usersApi.usersApi.find(
+            (user) =>
+                user.email === email && user.password === password
+        );
+
+        if (authenticatedUser) {
+            
             if (authenticatedUser.admin) {
+                // Armazene o token no localStorage aqui
+                const token = "seu-token-aqui"; // Você deve gerar um token JWT válido
+                localStorage.setItem("token", token);
                 navigate("/admin");
             } else {
                 navigate("/user");
@@ -40,7 +35,6 @@ const Login = () => {
             setError("Credenciais inválidas");
         }
     };
-    
 
     return (
         <Main>
