@@ -2,25 +2,57 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import colors from "../constants/colors";
 import Pagination from "../hooks/Pagination";
-import users from "../constants/users.json"
 // import { goToLogin } from "../routes/Cordinator";
 import { useNavigate } from "react-router-dom";
 // import { useAuth } from "../hooks/AuthContext";
 import { useProtectedPage } from "../hooks/useProtectPage";
 import { goToLogin } from "../routes/Cordinator";
+import { useQuery, gql } from "@apollo/client";
+import { formatDate, formatTime } from "../utils/Dates";
 
+const REGISTERED_TIMES_QUERY = gql`
+query RegisteredTimes {
+    registeredTimes(limit: 8, sort: "created_at:DESC") {
+      id
+      created_at
+      user {
+        id
+        name
+        username
+        email
+        role {
+          id
+          name
+        }
+      }
+    }
+  }
+  
+`;
 const Admin = () => {
     useProtectedPage()
     const navigate = useNavigate()
-    // const { logout } = useAuth();
-
     const [currentPage, setCurrentPage] = useState(1);
+
+    // const { logout } = useAuth();
+    const { loading, error, data } = useQuery(REGISTERED_TIMES_QUERY, {
+        context: {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        },
+    });
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    const registeredTimes = data.registeredTimes;
+
     const itemsPerPage = 9;
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    const currentItems = users.users.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(users.users.length / itemsPerPage);
+    const currentItems = registeredTimes.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(registeredTimes.length / itemsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -54,14 +86,15 @@ const Admin = () => {
                         currentItems.map((item, index) => (
                             <Card key={index}>
                                 <div className="collaborator-list">
-                                    <p >{item.colaborador}</p>
-                                    <p className="collaborator-id" >{item.id}</p>
+                                    <p >{item.user.name}</p>
+                                    <p className="collaborator-id">00{item.user.id}</p>
                                 </div>
                                 <div className="date-list">
-                                    <p >{item.data}</p>
+                                    <p>{formatDate(item.created_at)}</p>
                                 </div>
                                 <div className="time-list">
-                                    <p >{item.hora}</p>
+                                    {/* <p>{item.timeRegistered}</p> */}
+                                    <p>{formatTime(item.created_at)}h</p>
                                 </div>
                             </Card>
                         ))}

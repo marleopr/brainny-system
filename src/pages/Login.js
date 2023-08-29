@@ -6,7 +6,24 @@ import ButtonAll from "../components/ButtonAll"
 import { useNavigate } from "react-router-dom"
 // import { useAuth } from "../hooks/AuthContext"
 import { useState } from "react"
-import usersApi from "../constants/usersApi.json"
+// import usersApi from "../constants/usersApi.json"
+import { useMutation, gql } from "@apollo/client";
+
+const LOGIN_MUTATION = gql`
+mutation Login($email: String!, $password: String!) {
+    login(input: { identifier: $email, password: $password, provider: "local" }) {
+      jwt
+      user {
+        id
+        username
+        email
+        role {
+          type
+        }
+      }
+    }
+  }
+`;
 
 const Login = () => {
     const navigate = useNavigate();
@@ -14,24 +31,22 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
 
-   const handleLogin = async (event) => {
-        event.preventDefault();
-        const authenticatedUser = usersApi.usersApi.find(
-            (user) =>
-                user.email === email && user.password === password
-        );
+    // const [loginMutation, { loading }] = useMutation(LOGIN_MUTATION);
+    const [loginMutation] = useMutation(LOGIN_MUTATION);
 
-        if (authenticatedUser) {
-            
-            if (authenticatedUser.admin) {
-                // Armazene o token no localStorage aqui
-                const token = "seu-token-aqui"; // Você deve gerar um token JWT válido
-                localStorage.setItem("token", token);
-                navigate("/admin");
-            } else {
-                navigate("/user");
-            }
-        } else {
+    const handleLogin = async (event) => {
+        event.preventDefault();
+
+        try {
+            const { data } = await loginMutation({
+                variables: { email, password },
+            });
+
+            const token = data.login.jwt;
+            localStorage.setItem("token", token);
+
+            navigate("/user");
+        } catch (error) {
             setError("Credenciais inválidas");
         }
     };

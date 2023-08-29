@@ -2,31 +2,77 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import colors from "../constants/colors";
 import Pagination from "../hooks/Pagination";
-import users from "../constants/users.json"
+// import users from "../constants/users.json"
 import { goToLogin } from "../routes/Cordinator";
 import { useNavigate } from "react-router-dom";
 import ButtonAll from "../components/ButtonAll";
 import ModalRegister from "../components/ModalRegister";
+import { useQuery, gql } from "@apollo/client";
+import { formatDate } from "../utils/Dates";
+// import { gql } from 'graphql-tag';
+
 // import { useProtectedPage } from "../hooks/useProtectPage";
 // import { useAuth } from "../hooks/AuthContext";
+
+const REGISTERED_TIMES_QUERY_BY_USER = gql`
+query RegisteredTimesUserByUser($id: ID!) {
+    registeredTimes(
+      where: { user: { id: $id } }
+      limit: 8
+      sort: "created_at:DESC"
+    ) {
+      id
+      created_at
+      user {
+        id
+        name
+        username
+        email
+        role {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
 
 const User = () => {
     const navigate = useNavigate()
     // const { logout } = useAuth();
     // useProtectedPage()
-
     const [currentPage, setCurrentPage] = useState(1);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const { loading, error, data } = useQuery(REGISTERED_TIMES_QUERY_BY_USER, {
+        variables: {
+            id: `Bearer ${localStorage.getItem("userId")}`,
+        },
+        context: {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+        },
+    });
+
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+
+    const registeredTimes = data.registeredTimes;
+
     const itemsPerPage = 9;
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-    const currentItems = users.users.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(users.users.length / itemsPerPage);
+    // const currentItems = users.users.slice(indexOfFirstItem, indexOfLastItem);
+    // const totalPages = Math.ceil(users.users.length / itemsPerPage);
+    const currentItems = registeredTimes.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(registeredTimes.length / itemsPerPage);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-    const [modalOpen, setModalOpen] = useState(false);
 
     const openModal = () => {
         setModalOpen(true);
@@ -38,6 +84,7 @@ const User = () => {
         // logout();
         goToLogin(navigate)
     };
+
 
     return (
         <Main>
@@ -69,14 +116,14 @@ const User = () => {
                         currentItems.map((item, index) => (
                             <Card key={index}>
                                 <div className="collaborator-list">
-                                    <p >{item.colaborador}</p>
-                                    <p className="collaborator-id" >{item.id}</p>
+                                    <p >{item.user.name}</p>
+                                    <p className="collaborator-id">00{item.user.id}</p>
                                 </div>
                                 <div className="date-list">
-                                    <p >{item.data}</p>
+                                <p>{formatDate(item.created_at)}</p>
                                 </div>
                                 <div className="time-list">
-                                    <p >{item.hora}</p>
+                                <p>{formatDate(item.created_at)}</p>
                                 </div>
                             </Card>
                         ))}
