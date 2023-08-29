@@ -12,7 +12,7 @@ import { formatDate, formatTime } from "../utils/Dates";
 
 const REGISTERED_TIMES_QUERY = gql`
 query RegisteredTimes {
-    registeredTimes(limit: 8, sort: "created_at:DESC") {
+    registeredTimes(limit: 27, sort: "created_at:DESC") {
       id
       created_at
       user {
@@ -35,7 +35,7 @@ const Admin = () => {
     const [currentPage, setCurrentPage] = useState(1);
 
     // const { logout } = useAuth();
-    const { loading, error, data } = useQuery(REGISTERED_TIMES_QUERY, {
+    const { loading, error, data, refetch } = useQuery(REGISTERED_TIMES_QUERY, {
         context: {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -45,7 +45,7 @@ const Admin = () => {
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
-
+    refetch()
     const registeredTimes = data.registeredTimes;
 
     const itemsPerPage = 9;
@@ -58,7 +58,7 @@ const Admin = () => {
         setCurrentPage(pageNumber);
     };
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        localStorage.clear();
         goToLogin(navigate)
     };
 

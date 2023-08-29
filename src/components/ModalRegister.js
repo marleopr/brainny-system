@@ -1,8 +1,54 @@
 import { styled } from "styled-components";
 import colors from "../constants/colors";
 import ButtonAll from "./ButtonAll";
+import { useMutation, gql } from "@apollo/client";
+import { formatDate, formatTime } from "../utils/Dates";
+import { useState } from "react";
 
-const ModalRegister = ({ closeModal }) => {
+const CREATE_REGISTERED_TIME = gql`
+mutation CreateRegisteredTime($id: ID) {
+    createRegisteredTime(input: { data: { user: $id } }) {
+      registeredTime {
+        id
+        user {
+          name
+        }
+        created_at
+      }
+    }
+}
+`
+const ModalRegister = ({ closeModal, refetch }) => {
+    const [createRegisteredTime] = useMutation(CREATE_REGISTERED_TIME);
+    // eslint-disable-next-line no-unused-vars
+    const [createdTime, setCreatedTime] = useState();
+
+    const [currentTime, setCurrentTime] = useState(new Date()); // Estado para o horário atual
+
+    const handleCreateRegister = async () => {
+        try {
+            const { data } = await createRegisteredTime({
+                variables: {
+                    id: `${localStorage.getItem("userId")}`,
+                },
+                context: {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                },
+            });
+            // Set the created time data
+            setCreatedTime(data.createRegisteredTime.registeredTime);
+            setCurrentTime(new Date());
+            closeModal()
+            refetch();
+        } catch (error) {
+            // Handle error
+            console.error("Error creating Registered Time:", error);
+            console.error("Server error message:", error.message);
+        }
+    };
+
     return (
         <ModalOverlay>
             <ModalContent>
@@ -11,20 +57,20 @@ const ModalRegister = ({ closeModal }) => {
                     <ModalTitle>
                         <p className="title">Registrar novo ponto</p>
                         <div>
+                            {/* Display current time */}
                             <InputStyle>
-                                <img src="img/imgClock.svg" alt="Imagem de um relógio" />
-                                <p className="time-point">10:30</p>
-                                <p className="date-point">26/09/2021</p>
-                                <ButtonContainer>
-                                    <div className="button-container">
-                                        <ButtonAll label="Bater ponto" width="200px" />
-                                    </div>
-                                    <div className="button-container">
-                                        <ButtonAll variant='outline' label="Cancelar" width="200px" />
-                                    </div>
-                                </ButtonContainer>
+                                <img src="img/imgClock.svg" alt="Clock" />
+                                <p className="time-point">{formatTime(currentTime)}</p>
+                                <p className="date-point">{formatDate(currentTime)}</p>
                             </InputStyle>
-
+                            <ButtonContainer>
+                                <div className="button-container">
+                                    <ButtonAll onClick={handleCreateRegister} label="Bater ponto" width="200px" />
+                                </div>
+                                <div className="button-container">
+                                    <ButtonAll onClick={closeModal} variant='outline' label="Cancelar" width="200px" />
+                                </div>
+                            </ButtonContainer>
                         </div>
                     </ModalTitle>
                 </ContainerModal>

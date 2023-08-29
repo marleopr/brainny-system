@@ -6,7 +6,9 @@ export const useProtectedPage = () => {
 
     useEffect(() => {
         const token = localStorage.getItem("token")
-        console.log("Token:", token);
+        const role = localStorage.getItem("role")
+
+        role === "admin" ? navigate("/admin") : navigate("/user")
 
         if (token === null) {
             console.log("Não está logado!")

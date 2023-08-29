@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import colors from "../constants/colors";
 import Pagination from "../hooks/Pagination";
-// import users from "../constants/users.json"
 import { goToLogin } from "../routes/Cordinator";
 import { useNavigate } from "react-router-dom";
 import ButtonAll from "../components/ButtonAll";
 import ModalRegister from "../components/ModalRegister";
 import { useQuery, gql } from "@apollo/client";
-import { formatDate } from "../utils/Dates";
-// import { gql } from 'graphql-tag';
+import { formatDate, formatTime } from "../utils/Dates";
+import { useProtectedPage } from "../hooks/useProtectPage";
 
 // import { useProtectedPage } from "../hooks/useProtectPage";
 // import { useAuth } from "../hooks/AuthContext";
@@ -18,7 +17,7 @@ const REGISTERED_TIMES_QUERY_BY_USER = gql`
 query RegisteredTimesUserByUser($id: ID!) {
     registeredTimes(
       where: { user: { id: $id } }
-      limit: 8
+      limit: 27
       sort: "created_at:DESC"
     ) {
       id
@@ -38,15 +37,17 @@ query RegisteredTimesUserByUser($id: ID!) {
 `;
 
 const User = () => {
+    useProtectedPage()
+
     const navigate = useNavigate()
     // const { logout } = useAuth();
     // useProtectedPage()
     const [currentPage, setCurrentPage] = useState(1);
     const [modalOpen, setModalOpen] = useState(false);
 
-    const { loading, error, data } = useQuery(REGISTERED_TIMES_QUERY_BY_USER, {
+    const { loading, error, data, refetch } = useQuery(REGISTERED_TIMES_QUERY_BY_USER, {
         variables: {
-            id: `Bearer ${localStorage.getItem("userId")}`,
+            id: `${localStorage.getItem("userId")}`,
         },
         context: {
             headers: {
@@ -54,7 +55,6 @@ const User = () => {
             },
         },
     });
-
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
@@ -64,9 +64,6 @@ const User = () => {
     const itemsPerPage = 9;
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-
-    // const currentItems = users.users.slice(indexOfFirstItem, indexOfLastItem);
-    // const totalPages = Math.ceil(users.users.length / itemsPerPage);
     const currentItems = registeredTimes.slice(indexOfFirstItem, indexOfLastItem);
     const totalPages = Math.ceil(registeredTimes.length / itemsPerPage);
 
@@ -81,10 +78,9 @@ const User = () => {
         setModalOpen(false);
     };
     const handleLogout = () => {
-        // logout();
+        localStorage.clear();
         goToLogin(navigate)
     };
-
 
     return (
         <Main>
@@ -92,7 +88,6 @@ const User = () => {
                 <img style={{ width: '8.3rem', margin: '20px' }} src="img/imgLogoPontoGo.svg" alt="Logo PontoGo" />
                 <Dashboard>
                     <img src="img/imgDashboardUser.svg" alt="DashboardUser" />
-
                 </Dashboard>
                 <LogoutContainer onClick={handleLogout}>
                     <img src="img/imgLogout.svg" alt="Logout" />
@@ -104,7 +99,7 @@ const User = () => {
                     <ButtonAll onClick={openModal} label="Registrar ponto" width="12.5rem" height='50px' />
                 </ButtonContainer>
                 {modalOpen && (
-                    <ModalRegister openModal={openModal} closeModal={closeModal} />
+                    <ModalRegister openModal={openModal} closeModal={closeModal} refetch={refetch} />
                 )}
                 <ColumnContainer>
                     <div className="collaborator">Colaborador</div>
@@ -120,10 +115,10 @@ const User = () => {
                                     <p className="collaborator-id">00{item.user.id}</p>
                                 </div>
                                 <div className="date-list">
-                                <p>{formatDate(item.created_at)}</p>
+                                    <p>{formatDate(item.created_at)}</p>
                                 </div>
                                 <div className="time-list">
-                                <p>{formatDate(item.created_at)}</p>
+                                    <p>{formatTime(item.created_at)}h</p>
                                 </div>
                             </Card>
                         ))}
@@ -136,7 +131,6 @@ const User = () => {
                     />
                 </PaginationContainer>
             </TableContainer>
-
         </Main>
     );
 }

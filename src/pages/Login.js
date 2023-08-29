@@ -6,7 +6,6 @@ import ButtonAll from "../components/ButtonAll"
 import { useNavigate } from "react-router-dom"
 // import { useAuth } from "../hooks/AuthContext"
 import { useState } from "react"
-// import usersApi from "../constants/usersApi.json"
 import { useMutation, gql } from "@apollo/client";
 
 const LOGIN_MUTATION = gql`
@@ -43,9 +42,12 @@ const Login = () => {
             });
 
             const token = data.login.jwt;
+            const userId = data.login.user.id
+            const role = data.login.user.role.type
             localStorage.setItem("token", token);
-
-            navigate("/user");
+            localStorage.setItem("userId", userId);
+            localStorage.setItem("role", role)
+            role === "admin" ? navigate("/admin") : navigate("/user")
         } catch (error) {
             setError("Credenciais inválidas");
         }
