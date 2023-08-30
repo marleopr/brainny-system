@@ -9,6 +9,7 @@ import ModalRegister from "../components/ModalRegister";
 import { useQuery, gql } from "@apollo/client";
 import { formatDate, formatTime } from "../utils/Dates";
 import { useProtectedPage } from "../hooks/useProtectPage";
+import ClockLoader from "../components/ClockLoader";
 
 // import { useProtectedPage } from "../hooks/useProtectPage";
 // import { useAuth } from "../hooks/AuthContext";
@@ -56,7 +57,8 @@ const User = () => {
         },
     });
 
-    if (loading) return <p>Loading...</p>;
+    // if (loading) return <p>Loading...</p>;
+    if (loading) return <ClockLoader />;
     if (error) return <p>Error: {error.message}</p>;
 
     const registeredTimes = data.registeredTimes;
@@ -162,7 +164,7 @@ const Menu = styled.div`
 const Dashboard = styled.div`
     border-top: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
-    border-left: 5px solid ${colors.PrincipalColor};
+    border-left: 5px solid ${colors.PrimaryColor};
     padding: 30px;
     img {
         width: 8.2rem;
@@ -216,7 +218,7 @@ const TableContainer = styled.div`
     }
     .collaborator-list {
         width: 400px;
-        border-left: 5px solid ${colors.secundaryColor};
+        border-left: 5px solid ${colors.SecondaryColor};
         padding-left: 5px;
         font-weight: 600;
     }

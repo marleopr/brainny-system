@@ -2,6 +2,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { Router } from "./routes/Router";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { loadErrorMessages, loadDevMessages } from "@apollo/client/dev";
+import theme from "./constants/theme";
 // import AuthProvider from "./hooks/AuthContext";
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
 
   return (
     <div style={{ fontFamily: 'Poppins', alignItems: 'center', width: '100vw', height: '100h', boxSizing: 'border-box' }}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <ApolloProvider client={client}>
           {/* <AuthProvider> */}
           <Router />

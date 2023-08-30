@@ -73,7 +73,7 @@
 //     }
 //     .collaborator-list {
 //         width: 400px;
-//         border-left: 5px solid ${colors.secundaryColor};
+//         border-left: 5px solid ${colors.SecondaryColor};
 //         padding-left: 5px;
 //         font-weight: 600;
 //     }

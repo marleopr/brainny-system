@@ -110,7 +110,7 @@ const ContainerLogin = styled.div`
         margin-bottom: 15px ;
     }
     h1 {
-        color: ${colors.PrincipalColor};
+        color: ${colors.PrimaryColor};
         font-size: 32px;
         font-weight: 700;
         margin-bottom: 10px ;
@@ -121,7 +121,7 @@ const ContainerLogin = styled.div`
     a {
         margin-top: 5px;
         margin-bottom: 15px;
-        color: ${colors.PrincipalColor};
+        color: ${colors.PrimaryColor};
     }
     @media screen and (max-device-width: 480px) {
         h1 {

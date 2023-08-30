@@ -4,7 +4,8 @@ import ButtonAll from "./ButtonAll";
 import { useMutation, gql } from "@apollo/client";
 import { formatDate, formatTime } from "../utils/Dates";
 import { useState } from "react";
-
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 const CREATE_REGISTERED_TIME = gql`
 mutation CreateRegisteredTime($id: ID) {
     createRegisteredTime(input: { data: { user: $id } }) {
@@ -44,6 +45,7 @@ const ModalRegister = ({ closeModal, refetch }) => {
             refetch();
         } catch (error) {
             // Handle error
+            toast.error("O ponto não foi batido, tente novamente.")
             console.error("Error creating Registered Time:", error);
             console.error("Server error message:", error.message);
         }
@@ -51,6 +53,7 @@ const ModalRegister = ({ closeModal, refetch }) => {
 
     return (
         <ModalOverlay>
+            <ToastContainer />
             <ModalContent>
                 <ModalCloseButton onClick={closeModal}>x</ModalCloseButton>
                 <ContainerModal>
@@ -121,7 +124,7 @@ const ModalCloseButton = styled.button`
       color: ${colors.grey};
     }
   &:active {
-      color: ${colors.PrincipalColor};
+      color: ${colors.PrimaryColor};
     }
 `;
 const ModalTitle = styled.h2`
@@ -134,7 +137,7 @@ const ModalTitle = styled.h2`
     height: 700;
   }
   p{
-    color: ${colors.PrincipalColor};
+    color: ${colors.PrimaryColor};
     margin: 5px;
 }
 .time-point {

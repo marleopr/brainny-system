@@ -20,9 +20,9 @@ const InputPassword = ({ onChange, value }) => {
             <InputRightElement width='4.5rem'>
                 <Button h='1.75rem' size='sm' onClick={handleClick}>
                     {show ?
-                        <FontAwesomeIcon style={{ color: `${colors.PrincipalColor}` }} icon={faEye} />
+                        <FontAwesomeIcon style={{ color: `${colors.PrimaryColor}` }} icon={faEye} />
                         :
-                        <FontAwesomeIcon style={{ color: `${colors.PrincipalColor}` }} icon={faEyeSlash} />
+                        <FontAwesomeIcon style={{ color: `${colors.PrimaryColor}` }} icon={faEyeSlash} />
                     }
                 </Button>
             </InputRightElement>
