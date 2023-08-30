@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import LandingPage from "../pages/LandingPage"
 import Login from "../pages/Login"
 import Admin from "../pages/Admin"
 import User from "../pages/User"
@@ -9,7 +10,8 @@ export const Router = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route index element={<Login />} />
+                <Route index element={<LandingPage />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/user" element={<User />} />
                 {/* <Route path="/admin" element={<ProtectedRoute element={<Admin />} adminOnly />} /> */}

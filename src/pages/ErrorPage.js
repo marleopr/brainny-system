@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { goToLogin } from "../routes/Cordinator"
+import { goToLogin } from "../routes/Coordinator"
 import pageNotFound from "../assets/pagina-nao-encontrada.png"
 import ButtonAll from "../components/ButtonAll"
 import colors from "../constants/colors"

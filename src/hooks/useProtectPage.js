@@ -12,7 +12,7 @@ export const useProtectedPage = () => {
 
         if (token === null) {
             console.log("Não está logado!")
-            navigate("/")
+            navigate("/login")
         }
     }, [navigate])
 }

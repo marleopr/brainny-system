@@ -5,8 +5,12 @@ import InputPassword from "../components/InputPassword"
 import ButtonAll from "../components/ButtonAll"
 import { useNavigate } from "react-router-dom"
 // import { useAuth } from "../hooks/AuthContext"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useMutation, gql } from "@apollo/client";
+import { goToLandingPage } from "../routes/Coordinator"
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
+import { handleInstallApp, setupBeforeInstallPrompt } from "../utils/handleInstallApp"
 
 const LOGIN_MUTATION = gql`
 mutation Login($email: String!, $password: String!) {
@@ -29,6 +33,10 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+
+    useEffect(() => {
+        return setupBeforeInstallPrompt();
+    }, []);
 
     // const [loginMutation, { loading }] = useMutation(LOGIN_MUTATION);
     const [loginMutation] = useMutation(LOGIN_MUTATION);
@@ -55,11 +63,12 @@ const Login = () => {
 
     return (
         <Main>
+            <ToastContainer />
             <ContainerWelcome>
-                <img src="img/imgWelcome.svg" alt="Bem vindo ao PontoGo" />
+                <img onClick={() => goToLandingPage(navigate)} src="img/imgWelcome.svg" alt="Bem vindo ao PontoGo" />
             </ContainerWelcome>
             <ContainerLogin>
-                <img src="img/imgLogoPontoGo.svg" alt="Logo PontoGo" />
+                <img onClick={handleInstallApp} src="img/imgLogoPontoGo.svg" alt="Logo PontoGo" title="Instalar App PontoGo" />
                 <h1>Faça login</h1>
                 <h4>Email</h4>
                 <InputEmail placeholder="exemplo@email.com" value={email} onChange={event => setEmail(event.target.value)} />
@@ -89,10 +98,11 @@ const Main = styled.div`
 const ContainerWelcome = styled.div`
     img {
         width: 32rem;
-      }
-      @media screen and (max-device-width: 480px) {
-    h1 {
+        cursor: pointer;
     }
+    @media screen and (max-device-width: 480px) {
+        h1 {
+        }
     img {
         width: 12rem;
     }
@@ -108,6 +118,7 @@ const ContainerLogin = styled.div`
     img {
         width: 20.1rem;
         margin-bottom: 15px ;
+        cursor: pointer;
     }
     h1 {
         color: ${colors.PrimaryColor};

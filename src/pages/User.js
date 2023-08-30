@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import colors from "../constants/colors";
 import Pagination from "../hooks/Pagination";
-import { goToLogin } from "../routes/Cordinator";
+import { goToLogin } from "../routes/Coordinator";
 import { useNavigate } from "react-router-dom";
 import ButtonAll from "../components/ButtonAll";
 import ModalRegister from "../components/ModalRegister";

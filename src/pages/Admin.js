@@ -6,7 +6,7 @@ import Pagination from "../hooks/Pagination";
 import { useNavigate } from "react-router-dom";
 // import { useAuth } from "../hooks/AuthContext";
 import { useProtectedPage } from "../hooks/useProtectPage";
-import { goToLogin } from "../routes/Cordinator";
+import { goToLogin } from "../routes/Coordinator";
 import { useQuery, gql } from "@apollo/client";
 import { formatDate, formatTime } from "../utils/Dates";
 import ClockLoader from "../components/ClockLoader";
