@@ -11,9 +11,6 @@ import { formatDate, formatTime } from "../utils/Dates";
 import { useProtectedPage } from "../hooks/useProtectPage";
 import ClockLoader from "../components/ClockLoader";
 
-// import { useProtectedPage } from "../hooks/useProtectPage";
-// import { useAuth } from "../hooks/AuthContext";
-
 const REGISTERED_TIMES_QUERY_BY_USER = gql`
 query RegisteredTimesUserByUser($id: ID!) {
     registeredTimes(
@@ -41,8 +38,7 @@ const User = () => {
     useProtectedPage()
 
     const navigate = useNavigate()
-    // const { logout } = useAuth();
-    // useProtectedPage()
+
     const [currentPage, setCurrentPage] = useState(1);
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -57,7 +53,6 @@ const User = () => {
         },
     });
 
-    // if (loading) return <p>Loading...</p>;
     if (loading) return <ClockLoader />;
     if (error) return <p>Error: {error.message}</p>;
 
@@ -138,6 +133,7 @@ const User = () => {
 }
 
 export default User;
+
 const Main = styled.div`
     display: flex;
     flex-direction: row;
@@ -149,7 +145,7 @@ const Main = styled.div`
         display: flex;
         flex-direction: column;
     }
-    `
+`
 
 const Menu = styled.div`
     box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2), 0 10px 20px 0 rgba(0,0,0,0.19);
@@ -160,7 +156,8 @@ const Menu = styled.div`
         flex-direction: row;
         width: 100%;
     }
-    `
+`
+
 const Dashboard = styled.div`
     border-top: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
@@ -176,7 +173,8 @@ const Dashboard = styled.div`
         padding: 0;
         border: none;
     }
-    `
+`
+
 const LogoutContainer = styled.div`
     display: flex;
     position: fixed;
@@ -191,14 +189,16 @@ const LogoutContainer = styled.div`
         width: 100%;
         padding: 0;
     }
-    `
+`
+
 const ButtonContainer = styled.div`
     margin: 20px 0 20px 0;
       @media screen and (max-device-width: 480px) {
         display: flex;
         justify-content: center;
     }
-    `
+ `
+
 const TableContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -239,6 +239,7 @@ const TableContainer = styled.div`
         margin: 0;
     }
 `
+
 const ColumnContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -254,6 +255,7 @@ const CardsContainer = styled.div`
         display: contents;
     }
 `
+
 const Card = styled.div`
     display: flex;
     justify-content:  start;
@@ -263,6 +265,7 @@ const Card = styled.div`
     border: 1px solid silver;
     background-color: white;
 `
+
 const PaginationContainer = styled.div`
     display: flex;
     position: fixed;

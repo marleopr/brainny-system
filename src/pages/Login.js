@@ -4,7 +4,6 @@ import InputEmail from "../components/InputEmail"
 import InputPassword from "../components/InputPassword"
 import ButtonAll from "../components/ButtonAll"
 import { useNavigate } from "react-router-dom"
-// import { useAuth } from "../hooks/AuthContext"
 import { useEffect, useState } from "react"
 import { useMutation, gql } from "@apollo/client";
 import { goToLandingPage } from "../routes/Coordinator"
@@ -38,7 +37,6 @@ const Login = () => {
         return setupBeforeInstallPrompt();
     }, []);
 
-    // const [loginMutation, { loading }] = useMutation(LOGIN_MUTATION);
     const [loginMutation] = useMutation(LOGIN_MUTATION);
 
     const handleLogin = async (event) => {
@@ -82,6 +80,7 @@ const Login = () => {
     )
 }
 export default Login
+
 const Main = styled.div`
     display: flex;
     flex-direction: row;
@@ -95,6 +94,7 @@ const Main = styled.div`
         flex-direction: column;
     }
 `
+
 const ContainerWelcome = styled.div`
     img {
         width: 32rem;
@@ -107,7 +107,7 @@ const ContainerWelcome = styled.div`
         width: 12rem;
     }
 }
-    `
+`
 
 const ContainerLogin = styled.div`
     display: flex;

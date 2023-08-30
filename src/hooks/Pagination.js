@@ -46,6 +46,7 @@ const PaginationContainer = styled.div`
   align-items: center;
   margin-bottom: 50px;
 `
+
 const NavigationButton = styled.button`
   border: 1px solid ${colors.grey};
   outline: none;
@@ -63,7 +64,7 @@ const NavigationButton = styled.button`
     color: ${colors.silver};
     cursor: not-allowed;
   }
-  `;
+  `
 
 const PageNumber = styled.button`
   border: none;
@@ -79,8 +80,4 @@ const PageNumber = styled.button`
   &:hover{
     color: ${colors.grey};
   }
-`;
-// const PageLabel = styled.span`
-//   margin-right: 5px;
-//   font-weight: 600;
-// `;
+`

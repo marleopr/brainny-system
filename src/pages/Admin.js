@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import colors from "../constants/colors";
 import Pagination from "../hooks/Pagination";
-// import { goToLogin } from "../routes/Cordinator";
 import { useNavigate } from "react-router-dom";
-// import { useAuth } from "../hooks/AuthContext";
 import { useProtectedPage } from "../hooks/useProtectPage";
 import { goToLogin } from "../routes/Coordinator";
 import { useQuery, gql } from "@apollo/client";
@@ -35,7 +33,6 @@ const Admin = () => {
     const navigate = useNavigate()
     const [currentPage, setCurrentPage] = useState(1);
 
-    // const { logout } = useAuth();
     const { loading, error, data, refetch } = useQuery(REGISTERED_TIMES_QUERY, {
         context: {
             headers: {
@@ -94,7 +91,6 @@ const Admin = () => {
                                     <p>{formatDate(item.created_at)}</p>
                                 </div>
                                 <div className="time-list">
-                                    {/* <p>{item.timeRegistered}</p> */}
                                     <p>{formatTime(item.created_at)}h</p>
                                 </div>
                             </Card>
@@ -114,6 +110,7 @@ const Admin = () => {
 }
 
 export default Admin;
+
 const Main = styled.div`
     display: flex;
     flex-direction: row;
@@ -125,7 +122,7 @@ const Main = styled.div`
         display: flex;
         flex-direction: column;
     }
-    `
+`
 
 const Menu = styled.div`
     box-shadow: 0 5px 5px 0 rgba(0,0,0,0.2), 0 10px 20px 0 rgba(0,0,0,0.19);
@@ -135,7 +132,8 @@ const Menu = styled.div`
         flex-direction: row;
         width: 100%;
     }
-    `
+`
+
 const Dashboard = styled.div`
     border-top: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
@@ -151,7 +149,8 @@ const Dashboard = styled.div`
         padding: 0;
         border: none;
     }
-    `
+`
+
 const LogoutContainer = styled.div`
     display: flex;
     position: fixed;
@@ -166,7 +165,8 @@ const LogoutContainer = styled.div`
         padding: 0;
         position: relative;
     }
-    `
+`
+
 const TableContainer = styled.div`
     width: 100%;
     margin: 15px;
@@ -207,6 +207,7 @@ const TableContainer = styled.div`
         margin: 0;
     }
 `
+
 const ColumnContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -215,13 +216,14 @@ const ColumnContainer = styled.div`
     color: ${colors.grey};
 `
 const CardsContainer = styled.div`
-    flex: 1; /* Ocupar espaço disponível e empurrar o PaginationContainer para baixo */
+    flex: 1;
     display: flex;
     flex-direction: column;
     @media screen and (max-device-width: 480px) {
         display: contents;
     }
 `
+
 const Card = styled.div`
     display: flex;
     justify-content:  start;
@@ -231,6 +233,7 @@ const Card = styled.div`
     border: 1px solid silver;
     background-color: white;
 `
+
 const PaginationContainer = styled.div`
     display: flex;
     position: fixed;
