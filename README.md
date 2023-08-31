@@ -8,7 +8,7 @@
 
 # `Link`
 
-https://marleo-pontogo.vercel.app/
+http://marleo-pontogo.surge.sh/
 
 ###### O site tem suporte "adicionar a tela inicial" ou "Instalar PWA" (Progressive Web App).
 
@@ -68,7 +68,7 @@ Agora você pode personalizar o projeto de acordo com suas necessidades, fazendo
 Se desejar criar uma versão otimizada do projeto para implantação, execute o comando: npm run build
 Isso criará uma pasta "build" com os arquivos otimizados para produção.
 
-Você pode implantar o projeto em um servidor web ou em plataformas de hospedagem, como GitHub Pages, Vercel, Netlify, entre outros.
+Você pode implantar o projeto em um servidor web ou em plataformas de hospedagem, como GitHub Pages, Vercel, Surge, Netlify, entre outros.
 
 # `Organização do código`
 
@@ -112,10 +112,10 @@ Você pode implantar o projeto em um servidor web ou em plataformas de hospedage
 <img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white">
 <img src="https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white">
 <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white">
-<img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
 <img src="src\assets\chakraLogo.png" > 
 <img src="src\assets\graphqlLogo.png" > 
 <img src="src\assets\apolloLogo.png" > 
+<img src="src\assets\surgeLogo.png" > 
 </div>
 
 # `Autor`
