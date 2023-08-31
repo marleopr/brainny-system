@@ -268,12 +268,11 @@ const Card = styled.div`
 
 const PaginationContainer = styled.div`
     display: flex;
-    position: fixed;
+    position: static;
     bottom: 0;
     width: 100%;
-      @media screen and (max-device-width: 480px) {
-    position: static;
-    align-items: center;
     margin-top: 10px;
+      @media screen and (max-device-width: 480px) {
+    align-items: center;
 }
 `
