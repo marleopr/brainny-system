@@ -1,16 +1,16 @@
 import { Button } from "@chakra-ui/react"
 import theme from "../constants/theme"
 
-const ButtonAll = ({ onClick, label, width, height, variant }) => {
+const ButtonAll = ({ onClick, label, width, height, variant, customBackgroundColor, customColor }) => {
     return (
         <Button
             width={width}
             height={height}
             variant={variant}
             color={
-                variant === "outline" ? theme.colors.PrimaryColor : theme.colors.white}
+                customColor !== undefined ? customColor : variant === "outline" ? theme.colors.PrimaryColor : theme.colors.white}
             backgroundColor={
-                variant === "outline" ? "transparent" : theme.colors.PrimaryColor
+                customBackgroundColor !== undefined ? customBackgroundColor : variant === "outline" ? "transparent" : theme.colors.PrimaryColor
             }
             _hover={{
                 color: variant === "outline" ? "white" : "white",
